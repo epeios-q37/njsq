@@ -21,5 +21,5 @@
   <Import Project="Windows.targets"/>
   <Import Project="Details.props"/>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>09d338a1-1fc6-4e9c-8de3-3decab13ab00</ProjectGuid>
+    <ProjectGuid>70c40a21-feaf-40f2-827c-4f42c927e7bc</ProjectGuid>
     <RootName
