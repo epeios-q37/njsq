@@ -2,7 +2,7 @@
 <Configurations xmlns:xpp="http://q37.info/ns/xpp/">
  <Configuration target="njsq">
   <Parameters>
-   <Language>fr</Language>
+   <Language>en</Language>
    <Command>Launch</Command>
   </Parameters>
   <Definitions/>

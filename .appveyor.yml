@@ -53,7 +53,7 @@ artifacts:
 - path: '*.tar.gz'
 
 deploy:
-  tag: $(version)
+  tag: v$(version)
   description: ''
   provider: GitHub
   auth_token:

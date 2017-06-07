@@ -18,3 +18,8 @@ script:
 #- node-pre-gyp configure
 #- node-pre-gyp build
 - node test.js
+
+# To disable building on tags. Tags are supposed to begin with 'v' and only containing digit.
+branches:
+  except:
+    - /^v[0-9]/
