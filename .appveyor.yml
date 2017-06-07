@@ -1,9 +1,13 @@
 environment:
+  version: 20170522
+  affix: njsq
   matrix:
     - nodejs_version: "7"
     - nodejs_version: "6"
     - nodejs_version: "5"
     - nodejs_version: "4"
+
+skip_tags: true	
 
 platform:
 - x86
@@ -12,8 +16,8 @@ platform:
 # configuration: Release
 
 os :
-- Visual Studio 2013
-- Visual Studio 2015
+# - Visual Studio 2013
+# - Visual Studio 2015
 - Visual Studio 2017
 
 install:
@@ -25,11 +29,37 @@ install:
 before_build:
 - node-pre-gyp configure
 
-build:
+build_script:
 - node-pre-gyp /m build
+
+after_build:
+- node -e "process.stdout.write( process.versions.modules + ' - ' + require('./package.json').version)"
+- if "%platform%"=="x86" set platform=ia32
+- echo | set /p="%affix%-v%version%-node-v" >>tmpfile.tmp || true
+- node -e "process.stdout.write(process.versions.modules);" >>tmpfile.tmp
+- echo | set /p="-win32-" >>tmpfile.tmp || true
+- echo | set /p="%platform%" >>tmpfile.tmp || true
+- set /p addon= <tmpfile.tmp
+- echo .%addon%.
+- set dir=win32-%platform%
+- mkdir %dir%
+- copy lib\%dir%\*.node %dir%
+- 7z a -ttar -so dummy %dir% | 7z a -si %addon%.tar.gz
 
 test_script:
 - node test.js
+
+artifacts:
+- path: '*.tar.gz'
+
+deploy:
+  tag: $(version)
+  description: ''
+  provider: GitHub
+  auth_token:
+    secure: kKebvPLjikQbZ7E1Vm8omoYc9K0wOcKxjWsglp3+D4fV9ev/FaWr8ZBI+AseOTis
+  draft: false
+  prerelease: false
 
 # matrix:
   # allow_failures:
