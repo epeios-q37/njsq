@@ -38,8 +38,8 @@ mods += str strng tagsbs tol txf
 mods += tys uys utf xtf llio 
 mods += dlbrry nodeq plgn plgncore tht 
 mods += thtsub uvq v8q bomhdl cdgb64 
-mods += fil fnm lcl ntvstr rgstry 
-mods += stsfsm xml xpp 
+mods += fil fnm lcl njs ntvstr 
+mods += rgstry stsfsm xml xpp 
 mods += common registrar registry wrapper 
 
 pmods += pllio 
