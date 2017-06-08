@@ -10,7 +10,7 @@
   "binary": {
     "module_name": "njsq",
     "module_path": "./lib/{platform}-{arch}/",
-    "remote_path": "./epeios-q37/njsq-node/releases/download/v{version}/",
+    "remote_path": "./epeios-q37/njsq/releases/download/v{version}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
     "host": "https://github.com"
   },
