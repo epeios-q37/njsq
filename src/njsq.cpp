@@ -26,6 +26,7 @@
 #include "sclerror.h"
 #include "sclargmnt.h"
 
+#include "dir.h"
 #include "err.h"
 #include "cio.h"
 #include "epsmsc.h"
@@ -98,7 +99,7 @@ namespace {
 }
 
 namespace {
-	void GetParentModuleFilename_(
+	void GetModuleFilename_(
 		v8::Local<v8::Value> Module,
 		str::dString &Filename )
 	{
@@ -106,7 +107,8 @@ namespace {
 		char *Buffer = NULL;
 		v8q::sString String;
 	qRB
-		String.Init( v8q::sObject( v8q::sObject( Module ).Get( "parent" ) ).Get( "filename" ) );
+		//		String.Init( v8q::sObject( v8q::sObject( Module ).Get( "parent" ) ).Get( "filename" ) );
+				String.Init( v8q::sObject( Module ).Get( "filename" ) );
 		Buffer = (char *)malloc( String.Size() + 1 );
 
 		if ( Buffer == NULL )
@@ -123,7 +125,7 @@ namespace {
 	}
 }
 
-void GetParentModuleLocation_(
+void GetModuleLocation_(
 	v8::Local<v8::Value> Module,
 	str::dString &Location )
 {
@@ -133,7 +135,7 @@ qRH
 qRB
 	Filename.Init();
 
-	GetParentModuleFilename_( Module, Filename );
+	GetModuleFilename_( Module, Filename );
 
 	Path.Init();
 	fnm::GetLocation( Filename, Path );
@@ -188,12 +190,12 @@ namespace {
 
 	void Register_( const v8::FunctionCallbackInfo<v8::Value>& Info )
 	{
-	qRH
+	qRFH
 		v8q::sString RawArguments;
 		str::wString Arguments;
 		str::wString AddonFilename;
 		registrar::sRegistrar Registrar;
-	qRB
+	qRFB
 		RawArguments.Init( Info[0] );
 		
 		Arguments.Init();
@@ -206,9 +208,9 @@ namespace {
 
 		Registrar.Init();
 		Register_( AddonFilename, Registrar );
-	qRR
-	qRT
-	qRE
+	qRFR
+	qRFT
+	qRFE( common::ErrFinal() )
 	}
 }
 
@@ -219,6 +221,7 @@ void Start(
 {
 qRFH
 	str::wString Location;
+	str::wString Filename;
 qRFB
 	NODE_SET_METHOD( Exports, "wrapperInfo", GetWrapperInfo_ );
 	NODE_SET_METHOD( Exports, "addonInfo", GetAddonInfo_ );
@@ -234,9 +237,9 @@ qRFB
 	Rack_.Init( qRRor_, SCLError_, cio::GetSet( cio::t_Default ), Locale_ );
 
 	Location.Init();
-//	GetParentModuleLocation_( Module, Location );
+	GetModuleLocation_( Module, Location );
 
-	sclmisc::Initialize( Rack_, "h:\\bin" );
+	sclmisc::Initialize( Rack_, Location );
 
 	common::Functions.Init();
 	/*

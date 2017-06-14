@@ -44,9 +44,9 @@ qRB
 	Message.Init();
 
 	if ( ERRType != err::t_Abort ) {
-		ERRRst();	// To avoid relaunching of current error by objects of the 'FLW' library.
-
 		Message.Append( err::Message( Buffer ) );
+
+		ERRRst();	// To avoid relaunching of current error by objects of the 'FLW' library.
 	} else if ( sclerror::IsErrorPending() )
 		sclmisc::GetSCLBasePendingErrorTranslation( Message );
 
