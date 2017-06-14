@@ -1,5 +1,5 @@
 environment:
-  version: VERSION_TAG
+  version: 20170614
   affix: njsq
   matrix:
     - nodejs_version: "8"
