@@ -99,33 +99,70 @@ namespace {
 }
 
 namespace {
+
+	void InitWithModuleFilename_(
+		v8::Local<v8::Value> Module,
+		v8q::sString &Filename )
+	{
+		Filename.Init( v8q::sObject( Module ).Get( "filename" ) );
+	}
+
 	void GetModuleFilename_(
 		v8::Local<v8::Value> Module,
 		str::dString &Filename )
 	{
 	qRH
-		char *Buffer = NULL;
-		v8q::sString String;
+		v8q::sString V8Filename;
 	qRB
-		//		String.Init( v8q::sObject( v8q::sObject( Module ).Get( "parent" ) ).Get( "filename" ) );
-				String.Init( v8q::sObject( Module ).Get( "filename" ) );
-		Buffer = (char *)malloc( String.Size() + 1 );
+		InitWithModuleFilename_( Module, V8Filename );
 
-		if ( Buffer == NULL )
-			qRAlc();
-
-		String.Get( Buffer );
-
-		Filename.Append( Buffer, String.Size() );
+		V8Filename.Get( Filename );
 	qRR
 	qRT
-		if ( Buffer != NULL )
-			free( Buffer );
 	qRE
+	}
+
+	void GetParentModuleFilename_(
+		v8::Local<v8::Value> Module,
+		str::dString &Filename )
+	{
+		GetModuleFilename_( v8q::sObject( Module ).Get( "parent" ), Filename );
+	}
+
+	// Returns true if 'Filename' ends with '.node'.
+	bso::sBool IsNJSq_( const fnm::rName &Filename )
+	{
+		bso::sBool Is = false;
+	qRH
+		fnm::rName Basename;
+		str::wString Buffer;
+	qRB
+		Basename.Init();
+		fnm::GetBasename( Filename, Basename );
+
+		Buffer.Init();
+		Basename.UTF8( Buffer );
+
+		Is = Buffer == NAME_LC ".node";
+	qRR
+	qRT
+	qRE
+		return Is;
+	}
+
+	void GetAddonFilename_(
+		v8::Local<v8::Value> Module,
+		str::dString &Filename )
+	{
+		Filename.Init();
+		GetModuleFilename_( Module, Filename );
+
+		if ( !IsNJSq_( Filename ) )
+			qRGnr();
 	}
 }
 
-void GetModuleLocation_(
+void GetAddonLocation_(
 	v8::Local<v8::Value> Module,
 	str::dString &Location )
 {
@@ -135,7 +172,7 @@ qRH
 qRB
 	Filename.Init();
 
-	GetModuleFilename_( Module, Filename );
+	GetAddonFilename_( Module, Filename );
 
 	Path.Init();
 	fnm::GetLocation( Filename, Path );
@@ -237,7 +274,7 @@ qRFB
 	Rack_.Init( qRRor_, SCLError_, cio::GetSet( cio::t_Default ), Locale_ );
 
 	Location.Init();
-	GetModuleLocation_( Module, Location );
+	GetAddonLocation_( Module, Location );
 
 	sclmisc::Initialize( Rack_, Location );
 
