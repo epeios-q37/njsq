@@ -1,4 +1,8 @@
-# Node.js addon wrapper (*njsq*)
+# NJSq
+
+Node.js *addon* wrapper.
+
+For more information, see [http://q37.info/tools/njsq/](http://q37.info/tools/njsq/).
 
 [![NPM](https://nodei.co/npm/njsq.png)](https://nodei.co/npm/njsq/)
 
@@ -7,5 +11,4 @@
 *Windows* : [![AppVeyor](http://ci.appveyor.com/api/projects/status/github/epeios-q37/njsq)](http://ci.appveyor.com/project/epeios-q37/njsq)
 
 
-For more information, see [http://q37.info/tools/njsq/](http://q37.info/tools/njsq/).
 
