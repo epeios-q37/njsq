@@ -28,6 +28,8 @@ namespace wrapper {
 	bso::sBool GetLauncherInfo( str::dString &Info );
 
 	void Launch( const v8::FunctionCallbackInfo<v8::Value>& Info );
+
+	void DeleteLauncher( void );
 }
 
 #endif

@@ -75,7 +75,7 @@ inline void GetString_(
 	qRB
 		String.Init( Info[Index] );
 
-	String.Get( Value );
+		String.Get( Value );
 	qRR
 		qRT
 		qRE
@@ -164,9 +164,8 @@ qRFT
 qRFE( common::ErrFinal( Info.GetIsolate() ) )
 }
 
-qGDTOR( wrapper )
+void wrapper::DeleteLauncher( void )
 {
 	if ( Launcher_ != NULL )
 		delete Launcher_;
 }
-

@@ -1,5 +1,5 @@
 environment:
-  version: 20170620
+  version: 20170621
   affix: njsq
   matrix:
     - nodejs_version: "8"
