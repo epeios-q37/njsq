@@ -180,7 +180,7 @@ namespace mtx {
 		bso::bool__ Destroy )
 	{
 # ifdef MTX__ATOMIC
-		atomic_init( &Counter, Value );
+		std::atomic_init( &Counter, Value );
 		// Counter = ATOMIC_VAR_INIT( Value );	// 'clang++' issues a warning.
 # elif defined( MTX__DARWIN )
 		Counter = Value;

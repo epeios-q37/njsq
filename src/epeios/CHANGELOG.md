@@ -1,5 +1,9 @@
 # *Epeios* changelog
 
+2017-08-04 :
+- *MTX* :
+  - Adding missing `std::` reference introduced in previous change to this library.
+
 2017-07-31 :
 - *CIO* :
   - Adaptation to changes in *Visual Studio 2017*.
