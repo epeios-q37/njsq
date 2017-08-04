@@ -1,5 +1,5 @@
 environment:
-  version: 20170621
+  version: 20170731
   affix: njsq
   matrix:
     - nodejs_version: "8"
@@ -30,7 +30,7 @@ build_script:
 - node-pre-gyp /m build
 
 after_build:
-- node -e "process.stdout.write( process.versions.modules + ' - ' + require('./package.json').version)"
+- node -e "console.log( process.versions.modules + ' - ' + require('./package.json').version)"
 - if "%platform%"=="x86" set platform=ia32
 - echo | set /p="%affix%-v%version%-node-v" >>tmpfile.tmp || true
 - node -e "process.stdout.write(process.versions.modules);" >>tmpfile.tmp
@@ -44,7 +44,11 @@ after_build:
 - 7z a -ttar -so dummy %dir% | 7z a -si %addon%.tar.gz
 
 test_script:
+- node --version
+- npm --version
+- echo "***** 'NJSq' TEST BEGIN *****"
 - node test.js
+- echo "***** 'NJSq' TEST END *****"
 
 artifacts:
 - path: '*.tar.gz'
