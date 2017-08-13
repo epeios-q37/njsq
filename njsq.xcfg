@@ -51,10 +51,10 @@
    <Argument id="LaunchCommand" Description="LaunchCommandDescription" long="launch" short="l" Value="Launch" Usage="%TestFlag% %TestOption% %TestArgument%"/>
    <Argument id="TestFlag" Description="TestFlagDescription" long="flag" short="f" Path="Flag" Value="TestFlag"/>
    <Argument id="TestOption" Description="TestOptionDescription" long="option" short="o" Path="Option" Label="TestOptionLabel"/>
-   <Argument id="AddonArgument" Description="AddonArgumentDescription" Path="AddonFilename" Label="AddonArgumentLabel"/>
+   <Argument id="ComponentArgument" Description="ComponentArgumentDescription" Path="ComponentFilename" Label="ComponentArgumentLabel"/>
    <Layouts>
     <Layout command="Launch">
-     <Link index="0" Target="AddonArgument"/>
+     <Link index="0" Target="ComponentArgument"/>
     </Layout>
    </Layouts>
   </Arguments>

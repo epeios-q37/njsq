@@ -38,9 +38,9 @@ mods += str strng tagsbs tol txf
 mods += tys uys utf xtf llio 
 mods += dlbrry nodeq plgn plgncore tht 
 mods += thtsub uvq v8q bomhdl cdgb64 
-mods += fil fnm lcl njs ntvstr 
-mods += rgstry stsfsm xml xpp 
-mods += common registrar registry wrapper 
+mods += fil fnm lcl n4a n4aups 
+mods += ntvstr rgstry stsfsm xml xpp 
+mods += registry wrapper 
 
 pmods += pllio 
 
@@ -378,7 +378,7 @@ ifeq ("$(target)","$(Android)")
 	rm -rf *.d
 endif
 
-copt += -DVERSION=\""20170807"\"
+copt += -DVERSION=\""20170813"\"
 copt += -DCOPYRIGHT_YEARS=\""2017"\"
 copt += -DIDENTIFIER=\""d6a723cb-e88f-4f2f-b429-3adc207f1d62"\"
 

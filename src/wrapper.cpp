@@ -19,51 +19,13 @@
 
 #include "wrapper.h"
 
-#include "v8q.h"
-
+#include "n4aups.h"
 #include "sclerror.h"
+#include "v8q.h"
 
 using namespace wrapper;
 
-namespace {
-	using njs::cLauncher;
-
-	 cLauncher *Launcher_ = NULL;
-
-	cLauncher &GetLauncher_( void )
-	{
-		if ( Launcher_ == NULL )
-			qRGnr();
-
-		return *Launcher_;
-	}
-}
-
-void wrapper::SetLauncher( cLauncher *Launcher )
-{
-	if ( Launcher_ != NULL )
-		qRGnr();
-
-	if ( Launcher == NULL )
-		qRGnr();
-
-	Launcher_ = Launcher;
-}
-
-bso::sBool wrapper::GetLauncherInfo( str::dString &Info )
-{
-	if ( Launcher_ == NULL ) {
-		sclmisc::GetBaseTranslation( common::message::NoRegisteredComponent, Info );
-		return false;
-	}
-
-	Launcher_->Info( Info );
-
-	return true;
-}
-
-
-typedef njs::cCaller cCaller_;
+typedef n4a::cCaller cCaller_;
 
 inline void GetString_(
 	int Index,
@@ -77,8 +39,8 @@ inline void GetString_(
 
 		String.Get( Value );
 	qRR
-		qRT
-		qRE
+	qRT
+	qRE
 }
 
 void SetReturnValue_(
@@ -94,16 +56,18 @@ namespace {
 	private:
 		qRMV( const v8::FunctionCallbackInfo<v8::Value>, I_, Info_ );
 	protected:
-		virtual void NJSGetArgument(
+		virtual void N4AGetArgument(
 			int Index,
-			njs::eType Type,
+			n4a::eType Type,
 			void *Value ) override
 		{
+			Index++;	// The first one was the function id.
+
 			if ( Index >= I_().Length() )
 				qRGnr();
 
 			switch ( Type ) {
-			case njs::tString:
+			case n4a::tString:
 				GetString_( Index, I_(), *( str::dString * )Value );
 				break;
 			default:
@@ -111,12 +75,12 @@ namespace {
 				break;
 			}
 		}
-		virtual void NJSSetReturnValue(
-			njs::eType Type,
+		virtual void N4ASetReturnValue(
+			n4a::eType Type,
 			const void *Value ) override
 		{
 			switch ( Type ) {
-			case njs::tString:
+			case n4a::tString:
 				SetReturnValue_( I_(), *( const str::dString * )Value );
 				break;
 			default:
@@ -139,9 +103,9 @@ namespace {
 
 void wrapper::Launch( const v8::FunctionCallbackInfo<v8::Value>& Info )
 {
-qRFH
+qRH
 	sCaller_ Caller;
-qRFB
+qRB
 	if ( Info.Length() < 1 )
 		qRGnr();
 
@@ -150,22 +114,14 @@ qRFB
 
 	v8::Local<v8::Uint32> Index = v8::Local<v8::Uint32>::Cast(Info[0] );
 
-	if ( !common::Functions.Exists( Index->Uint32Value() ) )
-		qRGnr();
-
 	Caller.Init( Info );
 
-	GetLauncher_().Launch( common::Functions( Index->Uint32Value()), Caller );
+	n4aups::GetLauncher().Launch( n4aups::GetFunction( Index->Uint32Value()), Caller );
 
 	if ( sclerror::IsErrorPending() )
 		qRAbort();	// To force the handling of a pending error.
-qRFR
-qRFT
-qRFE( common::ErrFinal( Info.GetIsolate() ) )
+qRR
+qRT
+qRE
 }
 
-void wrapper::DeleteLauncher( void )
-{
-	if ( Launcher_ != NULL )
-		delete Launcher_;
-}

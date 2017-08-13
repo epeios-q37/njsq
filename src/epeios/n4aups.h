@@ -17,9 +17,35 @@
 	along with the Epeios framework.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#define NJS_COMPILATION_
+// Native For All UPStream
 
-#include "njs.h"
+#ifndef N4AUPS_INC_
+# define N4AUPS_INC_
 
-using namespace njs;
+# define N4AUPS_NAME		"N4AUPS"
 
+# if defined( E_DEBUG ) && !defined( N4AUPS_NODBG )
+#  define N4AUPS_DBG
+# endif
+
+# include "err.h"
+# include "n4a.h"
+
+namespace n4aups {
+	void SetLauncher( n4a::cLauncher *Launcher );
+
+	n4a::cLauncher &GetLauncher( void );
+
+	bso::sBool GetLauncherInfo( str::dString &Info );
+
+	void DeleteLauncher( void );
+
+	bso::sBool Register(
+		const fnm::rName &ComponentFilename,
+		sclmisc::sRack &Rack,
+		qRPD );
+
+	void *GetFunction( sdr::sRow Row );
+}
+
+#endif
