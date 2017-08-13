@@ -46,9 +46,7 @@ after_build:
 test_script:
 - node --version
 - npm --version
-- echo "***** 'NJSq' TEST BEGIN *****"
-- node test.js
-- echo "***** 'NJSq' TEST END *****"
+- node -e "process.stdout.write( \"***** 'NJSq' TEST BEGIN *****\n\"" ) && node test.js && node -e "process.stdout.write( \"***** 'NJSq' TEST END *****\n\"" )
 
 artifacts:
 - path: '*.tar.gz'
