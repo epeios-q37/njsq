@@ -62,12 +62,15 @@ namespace {
 	{
 	qRH
 		str::wString Info;
+		v8q::sLString String;
 	qRB
 		Info.Init();
 
 		GetWrapperInfo_( Info );
 
-		Args.GetReturnValue().Set( v8q::sString( Info ).Core() );
+		String.Init( Info );
+
+		Args.GetReturnValue().Set( String.Core() );
 	qRR
 	qRT
 	qRE
@@ -77,13 +80,16 @@ namespace {
 	{
 	qRH
 		str::wString Info;
+		v8q::sLString String;
 	qRB
 		Info.Init();
 
 		if ( !wrapper::GetLauncherInfo( Info ) )
 			sclmisc::GetBaseTranslation( "NoRegisteredComponent", Info );
 
-		Args.GetReturnValue().Set( v8q::sString( Info ).Core() );
+		String.Init( Info );
+
+		Args.GetReturnValue().Set( String.Core() );
 	qRR
 	qRT
 	qRE
@@ -94,9 +100,13 @@ namespace {
 
 	void InitWithModuleFilename_(
 		v8::Local<v8::Value> Module,
-		v8q::sString &Filename )
+		v8q::sLString &Filename )
 	{
-		Filename.Init( v8q::sObject( Module ).Get( "filename" ) );
+		nodeq::sLObject Object;
+
+		Object.Init( Module );
+
+		Filename.Init( Object.Get( "filename" ) );
 	}
 
 	void GetModuleFilename_(
@@ -104,7 +114,7 @@ namespace {
 		str::dString &Filename )
 	{
 	qRH
-		v8q::sString V8Filename;
+		v8q::sLString V8Filename;
 	qRB
 		InitWithModuleFilename_( Module, V8Filename );
 
@@ -113,14 +123,18 @@ namespace {
 	qRT
 	qRE
 	}
-
+#if 0
 	void GetParentModuleFilename_(
 		v8::Local<v8::Value> Module,
 		str::dString &Filename )
 	{
-		GetModuleFilename_( v8q::sObject( Module ).Get( "parent" ), Filename );
-	}
+		nodeq::sLObject Object;
 
+		Object.Init( Module );
+
+		GetModuleFilename_( Object.Get( "parent" ), Filename );
+	}
+#endif
 	// Returns true if 'Filename' ends with '.node'.
 	bso::sBool IsNJSq_( const fnm::rName &Filename )
 	{
@@ -141,7 +155,6 @@ namespace {
 	qRE
 		return Is;
 	}
-
 	void GetAddonFilename_(
 		v8::Local<v8::Value> Module,
 		str::dString &Filename )
@@ -217,15 +230,24 @@ namespace {
 	qRE
 	}
 
+	namespace {
+		void Launch_( n4njs::cAsync &Async )
+		{
+			uvq::Launch( Async );
+		}
+
+		n4njs::gShared Shared_;
+	}
+
 	void Register_( const v8::FunctionCallbackInfo<v8::Value>& Info )
 	{
 	qRFH
-		v8q::sString RawArguments;
+		v8q::sLString RawArguments;
 		str::wString Arguments;
 		str::wString ComponentFilename;
 	qRFB
 		RawArguments.Init( Info[0] );
-		
+
 		Arguments.Init();
 		RawArguments.Get( Arguments );
 
@@ -234,7 +256,9 @@ namespace {
 		ComponentFilename.Init();
 		sclmisc::MGetValue( registry::parameter::ComponentFilename, ComponentFilename );
 
-		wrapper::Register( ComponentFilename, Rack_ );
+		Shared_.Launcher = Launch_;
+
+		wrapper::Register( ComponentFilename, Rack_, Shared_ );
 	qRFR
 	qRFT
 	qRFE( ErrFinal_() )
@@ -263,7 +287,7 @@ qRFB
 	NODE_SET_METHOD( Exports, "wrapperInfo", GetWrapperInfo_ );
 	NODE_SET_METHOD( Exports, "componentInfo", GetComponentInfo_ );
 	NODE_SET_METHOD( Exports, "register", Register_ );
-	NODE_SET_METHOD( Exports, "_wrapper", wrapper::Launch );
+	NODE_SET_METHOD( Exports, "_wrapper", Launch_ );
 
 	cio::Initialize( cio::GetConsoleSet() );
 

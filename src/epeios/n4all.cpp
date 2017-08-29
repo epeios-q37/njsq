@@ -17,32 +17,9 @@
 	along with the Epeios framework.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#define V8Q__COMPILATION
+#define N4ALL_COMPILATION_
 
-#include "v8q.h"
+#include "n4all.h"
 
-#include "ntvstr.h"
-#include "flx.h"
+using namespace n4all;
 
-using namespace v8q;
-
-namespace {
-	// Global isolate.
-	v8::Isolate *Isolate_ = NULL;
-}
-
-void v8q::SetGlobalIsolate( v8::Isolate *Isolate )
-{
-	if ( Isolate_ != NULL )
-		qRFwk();
-
-	Isolate_ = Isolate;
-}
-
-v8::Isolate *v8q::GetGlobalIsolate( void )
-{
-	if ( Isolate_ == NULL )
-		return v8::Isolate::GetCurrent();
-	else
-		return Isolate_;
-}

@@ -17,32 +17,36 @@
 	along with the Epeios framework.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#define V8Q__COMPILATION
+// Native 4 (for) ALL Wrapper part
 
-#include "v8q.h"
+#ifndef N4ALLW_INC_
+# define N4ALLW_INC_
 
-#include "ntvstr.h"
-#include "flx.h"
+# define N4ALLW_NAME		"N4ALLW"
 
-using namespace v8q;
+# if defined( E_DEBUG ) && !defined( N4ALLW_NODBG )
+#  define N4ALLW_DBG
+# endif
 
-namespace {
-	// Global isolate.
-	v8::Isolate *Isolate_ = NULL;
+# include "err.h"
+# include "n4all.h"
+
+namespace n4allw {
+	void SetLauncher( n4all::cLauncher *Launcher );
+
+	n4all::cLauncher &GetLauncher( void );
+
+	bso::sBool GetLauncherInfo( str::dString &Info );
+
+	void DeleteLauncher( void );
+
+	bso::sBool Register(
+		const fnm::rName &ComponentFilename,
+		sclmisc::sRack &Rack,
+		void *UP,
+		qRPD );
+
+	void *GetFunction( sdr::sRow Row );
 }
 
-void v8q::SetGlobalIsolate( v8::Isolate *Isolate )
-{
-	if ( Isolate_ != NULL )
-		qRFwk();
-
-	Isolate_ = Isolate;
-}
-
-v8::Isolate *v8q::GetGlobalIsolate( void )
-{
-	if ( Isolate_ == NULL )
-		return v8::Isolate::GetCurrent();
-	else
-		return Isolate_;
-}
+#endif
