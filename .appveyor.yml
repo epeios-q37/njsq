@@ -50,7 +50,7 @@ test_script:
 - node -e "process.stdout.write( \"***** 'NJSq' TEST BEGIN *****\n\" )" && node test.js && node -e "process.stdout.write( \"***** 'NJSq' TEST END *****\n\" )"
 
 artifacts:
-- path: '*.tar.gz
+- path: '*.tar.gz'
 
 deploy:
   tag: v$(version)
