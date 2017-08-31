@@ -41,7 +41,8 @@ after_build:
 - set dir=win32-%platform%
 - mkdir %dir%
 - copy %affix%.node %dir%
-- 7z a %addon%.zip %dir%
+# It MUST be '.tar.gz' to be retrieved by 'node-pre-gyp' when installed with 'npm' !
+- 7z a -ttar -so dummy %dir% | 7z a -si %addon%.tar.gz
 
 test_script:
 - node --version
@@ -49,7 +50,7 @@ test_script:
 - node -e "process.stdout.write( \"***** 'NJSq' TEST BEGIN *****\n\" )" && node test.js && node -e "process.stdout.write( \"***** 'NJSq' TEST END *****\n\" )"
 
 artifacts:
-- path: '*.zip'
+- path: '*.tar.gz
 
 deploy:
   tag: v$(version)
