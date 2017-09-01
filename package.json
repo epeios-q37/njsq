@@ -1,8 +1,8 @@
 {
   "name": "njsq",
-  "version": "2017.8.31",
+  "version": "2017.9.1",
   "author": "Claude SIMON (http://q37.info/contact/)",
-  "description": "Node.js addon wrapper.",
+  "description": "Node.js addon wrapper",
   "main": "NJSq.js",
   "engines": {
     "node": ">=4"
@@ -10,12 +10,13 @@
   "binary": {
     "module_name": "njsq",
     "module_path": ".",
-    "remote_path": "./epeios-q37/njsq/releases/download/v20170831/",
-    "package_name": "{module_name}-v20170831-{node_abi}-{platform}-{arch}.tar.gz",
+    "remote_path": "./epeios-q37/njsq/releases/download/v20170901/",
+    "package_name": "{module_name}-v20170901-{node_abi}-{platform}-{arch}.tar.gz",
     "host": "https://github.com"
   },
   "dependencies": {
-    "node-pre-gyp": "^0.6.36"
+    
+    "node-pre-gyp": "0.6.x"
   },
   "devDependencies": {
     "aws-sdk": "2.x"
@@ -30,10 +31,7 @@
     "url": "git+https://github.com/epeios-q37/njsq.git"
   },
   "keywords": [
-    "addon",
-    "wrapper",
-    "q37",
-    "epeios"
+    "addon","native","C++","njsq","wrapper","libuv","q37","epeios"
   ],
   "license": "AGPL-3.0",
   "bugs": {
