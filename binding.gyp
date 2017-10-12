@@ -2,7 +2,6 @@
  "variables": {
   "stable": "../../stable/",
   "ext": "node",
-  "prefix": "",
  },
  "conditions": [
   [
