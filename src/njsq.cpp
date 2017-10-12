@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2016 by Claude SIMON (http://zeusw.org/epeios/contact.html).
+	Copyright (C) 2017 by Claude SIMON (http://zeusw.org/epeios/contact.html).
 
 	This file is part of NJSq.
 
@@ -231,7 +231,7 @@ namespace {
 	}
 
 	namespace {
-		void Launch_( n4njs::cAsync &Async )
+		void Async_( n4njs::cAsync &Async )
 		{
 			uvq::Launch( Async );
 		}
@@ -256,7 +256,7 @@ namespace {
 		ComponentFilename.Init();
 		sclmisc::MGetValue( registry::parameter::ComponentFilename, ComponentFilename );
 
-		Shared_.Launcher = Launch_;
+		Shared_.Async = Async_;
 
 		wrapper::Register( ComponentFilename, Rack_, Shared_ );
 	qRFR

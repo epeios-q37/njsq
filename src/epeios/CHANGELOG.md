@@ -1,5 +1,55 @@
 # *Epeios* changelog
 
+2017-10-12 :
+- N4ALLW
+  - `Register(...)` now automagically add the correct prefix and extension for the *Java*/*Node.js*/*PHP* component/addon/extension.
+
+2017-10-10 :
+- N4ALLW :
+  - Adding `Launch(...)`.
+
+2017-09-27 :
+- MTHITG :
+  - Fixing *g++* warning (displayed under *npm* compilation).
+
+2017-09-24 :
+- TOL:
+  - Upgrading `dObject<>`.
+
+2017-09-22 :
+- MTHFRC, MTHRTN
+  - Renaming *MTHFRC* to *MTHRTN*.
+- MTHITG :
+  - Adding `dInteger::Init(...)`variants.
+- XTF :
+  - Adding `sIFlow` methods variants.
+
+2017-09-17 :
+- N4ALL:
+  - Deporting some code to *N4...* libraries.
+- N4NJS, SCLN4A, SCLNJS:
+  - Upgrading.
+
+2017-09-15:
+- MTHITG :
+    - Upgrading.
+- SCLJRE
+  - Introducing `SCLNJSInfo(...)`.
+
+2017-09-12 :
+- SCLNJS :
+  - Adding `rRStream::Push(...)` variant.
+
+2017-09-11 :
+- THT :
+  - Adding `IgnoreTarget` parameter to some *Blocker* methods.
+
+2017-09-10 :
+- FLW :
+  - Adding `Take()` methods.
+- TOL :
+  - Introducing `Same(...)` function.
+
 2017-08-31 :
 - MTX :
   - Reverting a *clang++* workaround due to the fact that some older *clang++* version issues a linker error (see http://travis-ci.org/epeios-q37/xppq-cli/jobs/270384361).

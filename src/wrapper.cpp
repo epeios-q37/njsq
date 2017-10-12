@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2016 by Claude SIMON (http://zeusw.org/epeios/contact.html).
+	Copyright (C) 2017 by Claude SIMON (http://zeusw.org/epeios/contact.html).
 
 	This file is part of 'NJSq'.
 
@@ -303,7 +303,7 @@ namespace {
 	protected:
 		virtual void N4ALLGetArgument(
 			bso::sU8 Index,
-			n4all::sEnum Type,
+			n4all::sType Type,
 			void *Value ) override
 		{
 			Index++;	// The first one was the function id.
@@ -311,15 +311,16 @@ namespace {
 			if ( Index >= I_().Length() )
 				qRGnr();
 
+
 			switch ( Type ) {
-			case n4all::tString:
+			case n4njs::tString:
 				GetString_( Index, I_(), *( str::dString * )Value );
 				break;
 			case n4njs::tStream:
-				(*(n4njs::cURStream **)Value) = GetStream_( Index, I_() );
+				(*(n4njs::cURStream **)Value ) = GetStream_( Index, I_() );
 				break;
 			case n4njs::tBuffer:
-				(*( n4njs::cUBuffer ** )Value) = GetBuffer_( Index, I_() );
+				(*( n4njs::cUBuffer ** )Value ) = GetBuffer_( Index, I_() );
 				break;
 			case n4njs::tCallback:
 				( *( n4njs::cUCallback ** )Value ) = GetCallback_( Index, I_() );
@@ -330,11 +331,11 @@ namespace {
 			}
 		}
 		virtual void N4ALLSetReturnValue(
-			n4all::sEnum Type,
+			n4all::sType Type,
 			const void *Value ) override
 		{
 			switch ( Type ) {
-			case n4all::tString:
+			case n4njs::tString:
 				SetReturnValue_( I_(), *( const str::dString * )Value );
 				break;
 			default:
@@ -370,7 +371,9 @@ qRB
 
 	Caller.Init( Info );
 
-	n4allw::GetLauncher().Launch( n4allw::GetFunction( Index->Uint32Value()), Caller );
+	n4allw::Launch( Index->Uint32Value(), Caller );
+
+//	n4allw::GetLauncher().Launch( n4allw::GetFunction( Index->Uint32Value() ), Caller );
 
 	if ( sclerror::IsErrorPending() )
 		qRAbort();	// To force the handling of a pending error.

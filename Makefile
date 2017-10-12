@@ -26,21 +26,20 @@ copt += -DE_DEBUG
 #copt += -DERR_JMPUSE
 	
 mods += sclargmnt sclmisc sclerror scllocale sclrgstry 
-mods += ags aem bch bitbch bso 
-mods += cio cpe crptgr cslio crt 
-mods += ctn dir dte dtfbsc dtfptb 
-mods += epsmsc err fdr flf flsq 
-mods += flw flx ias idsq iof 
-mods += iop lck lst lstbch lstcrt 
+mods += ags aem bch bitbch bomhdl 
+mods += bso cdgb64 cio cpe crptgr 
+mods += cslio crt ctn dir dte 
+mods += dtfbsc dtfptb epsmsc err fdr 
+mods += fil flf flsq flw flx 
+mods += fnm ias idsq iof iop 
+mods += lcl lck lst lstbch lstcrt 
 mods += lstctn mns mtk mtx ntvstr 
-mods += que sdr stkbse stkbch stkctn 
-mods += str strng tagsbs tol txf 
-mods += tys uys utf xtf llio 
-mods += bomhdl cdgb64 dlbrry fil fnm 
-mods += lcl n4all n4allw n4njs nodeq 
-mods += ntvstr plgn plgncore rgstry stsfsm 
-mods += tht thtsub uvq uvqdcl v8q 
-mods += xml xpp 
+mods += que rgstry sdr stkbse stkbch 
+mods += stkcrt stkctn str strng stsfsm 
+mods += tagsbs tht thtsub tol txf 
+mods += tys uys utf xml xpp 
+mods += xtf llio dlbrry n4all n4allw 
+mods += n4njs plgn uvq uvqdcl v8q 
 mods += registry wrapper 
 
 pmods += pllio 
@@ -373,13 +372,12 @@ endif
 #############################
 		
 all: $(binary)
-
 	rm -rf *.o
 ifeq ("$(target)","$(Android)")
 	rm -rf *.d
 endif
 
-copt += -DVERSION=\""20170901"\"
+copt += -DVERSION=\""20171012"\"
 copt += -DCOPYRIGHT_YEARS=\""2017"\"
 copt += -DIDENTIFIER=\""d6a723cb-e88f-4f2f-b429-3adc207f1d62"\"
 

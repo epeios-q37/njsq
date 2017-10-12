@@ -17,20 +17,9 @@
 	along with the Epeios framework.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#define NODEQ__COMPILATION
+#define STKCRT_COMPILATION_
 
-#include "nodeq.h"
+#include "stkcrt.h"
 
-using namespace nodeq;
-
-#if 0
-namespace {
-	void ConstFreeCallback_(
-		char* data,
-		void* hint)
-	{
-		// Does nothing, as called for const buffer on stack.
-	}
-}
-#endif
+using namespace stkcrt;
 

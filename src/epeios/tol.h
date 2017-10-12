@@ -65,7 +65,11 @@
 
 # include "bso.h"
 
-// Predcleration
+// Predeclarations
+namespace uys {
+	struct sHook;
+}
+
 namespace ags {
 	class aggregated_storage_;
 }
@@ -650,9 +654,13 @@ namespace tol {
 //			S_.Object.reset( P );	// The object is already destroyed by the one which features the reference.
 		}
 		qCVDTOR( dObject );
-		void plug( class ags::aggregated_storage_ * )
+		void plug( uys::sHook &Hook )
 		{
-			// Pour des raisons de standardisation.
+			// Standardization.
+		}
+		void plug( ags::aggregated_storage_ *AS )
+		{
+			// Standardization.
 		}
 		dObject &operator =( const dObject &O )
 		{
@@ -2329,6 +2337,31 @@ namespace tol {
 	}
 
 
+	template <typename arg> inline arg Same_(
+		arg Arg1,
+		arg Arg2 )
+	{
+		if ( Arg1 != Arg2 )
+			qRFwk();
+
+		return Arg1;
+	}
+
+	template <typename arg, typename... args> inline arg Same_(
+		arg Arg1,
+		arg Arg2,
+		args... Args )
+	{
+		return Same_( Same_( Arg1, Arg2 ), Args... );
+	}
+
+	// Issues an error if all arguments are not of same value, else returns this value.
+	template <typename arg, typename... args> inline arg Same(
+		arg Arg,
+		args... Args )
+	{
+		return Same_( Arg, Args... );
+	}
 }
 
 
