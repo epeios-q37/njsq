@@ -31,7 +31,7 @@
     "url": "git+https://github.com/epeios-q37/njsq.git"
   },
   "keywords": [
-    "addon","native","C++","njsq","addon","native","C++","njsq","wrapper","libuv","q37","epeios","q37","epeios"
+    "addon","native","C++","njsq","wrapper","libuv","q37","epeios"
   ],
   "license": "AGPL-3.0",
   "bugs": {
