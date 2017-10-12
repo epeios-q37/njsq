@@ -39,8 +39,8 @@ mods += stkcrt stkctn str strng stsfsm
 mods += tagsbs tht thtsub tol txf 
 mods += tys uys utf xml xpp 
 mods += xtf llio dlbrry n4all n4allw 
-mods += n4njs plgn plgncore uvq uvqdcl 
-mods += v8q 
+mods += n4njs nodeq plgn plgncore uvq 
+mods += uvqdcl v8q 
 mods += registry wrapper 
 
 pmods += pllio 
