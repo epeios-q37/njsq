@@ -1,6 +1,6 @@
 {
   "name": "njsq",
-  "version": "2017.10.12",
+  "version": "2017.10.13",
   "author": "Claude SIMON (http://q37.info/contact/)",
   "description": "Node.js addon wrapper",
   "main": "NJSq.js",
@@ -10,8 +10,8 @@
   "binary": {
     "module_name": "njsq",
     "module_path": "./",
-    "remote_path": "./epeios-q37/njsq/releases/download/v20171012/",
-    "package_name": "{module_name}-v20171012-{node_abi}-{platform}-{arch}.tar.gz",
+    "remote_path": "./epeios-q37/njsq/releases/download/v20171013/",
+    "package_name": "{module_name}-v20171013-{node_abi}-{platform}-{arch}.tar.gz",
     "host": "https://github.com"
   },
   "dependencies": {
