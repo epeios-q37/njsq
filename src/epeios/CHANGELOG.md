@@ -1,6 +1,10 @@
 
 # *Epeios* changelog
 
+2018-01-05:
+- V8Q:
+  - Fixing 'G++' warning.
+
 2018-01-02:
 - CSDMXC:
   - Fixing bad variable type,
