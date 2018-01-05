@@ -118,7 +118,7 @@ namespace v8q {
 		v8::Local<v8::Array> Array = v8::Array::New( Isolate, Strings.Amount() );
 
 		while ( Row != qNIL ) {
-			if ( !Array->Set( GetContext( Isolate ), *Row, ToString( Strings( Row ), Isolate ) ).ToChecked() )
+			if ( !Array->Set( GetContext( Isolate ), *Row, ToString( Strings( Row ), Isolate ) ).FromJust() )
 				qRFwk();
 
 			Row = Strings.Next( Row );
