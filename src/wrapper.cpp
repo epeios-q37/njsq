@@ -150,7 +150,7 @@ namespace {
 		namespace {
 			void Error_( const v8::FunctionCallbackInfo<v8::Value>& info )
 			{
-				v8q::sLObject This;
+				v8q::sLFunction This;
 
 				This.Init( info[0] );
 
@@ -196,9 +196,11 @@ namespace {
 				tol::reset( P, Core_ );
 			}
 			qCVDTOR( rCore_ );
-			void Init( v8::Local<v8::Value> Value )
+			void Init(
+				v8::Local<v8::Value> Value,
+				bso::sBool UndefinedForbidden )
 			{
-				Core_.Init( Value );
+				Core_.Init( Value, UndefinedForbidden );
 			}
 			v8::Local<v8::Value> Core( void ) const
 			{
@@ -208,6 +210,7 @@ namespace {
 
 		template <typename host> inline host *Get_(
 			const v8::Local<v8::Value> Value,
+			bso::sBool UndefinedForbidden,
 			bso::sBool *Success = NULL )
 		{
 			host *Host = NULL;
@@ -218,7 +221,7 @@ namespace {
 			if ( Host == NULL )
 				qRAlc();
 
-			Host->Init( Value );
+			Host->Init( Value, UndefinedForbidden );
 		qRR
 			if ( Host != NULL )
 				delete Host;
@@ -229,9 +232,10 @@ namespace {
 
 		template <typename host> inline host *Get_(
 			int Index,
-			const v8::FunctionCallbackInfo<v8::Value> &Info )
+			const v8::FunctionCallbackInfo<v8::Value> &Info,
+			bso::sBool UndefinedForbidden )
 		{
-			return Get_<host>( Info[Index] );
+			return Get_<host>( Info[Index], UndefinedForbidden );
 		}
 
 		typedef rCore_<n4njs::cUObject, nodeq::rPObject> rObject_;
@@ -381,6 +385,7 @@ namespace {
 		protected:
 			virtual n4njs::cUObject *N4NJSLaunch(
 				n4njs::eType ReturnType,
+				bso::sBool *IsEmpty,
 				const n4njs::dArguments &Arguments ) override
 			{
 				n4njs::cUObject *CallbackReturn = NULL;
@@ -398,19 +403,23 @@ namespace {
 
 				Fill_( Argv, Arguments );
 
-				Return = Core_.Launch( Argv, Argc );
+				if ( Core_.IsEmpty() )
+					*IsEmpty = true;
+				else {
+					Return = Core_.Launch( Argv, Argc );
 
-				switch( ReturnType ) {
-				case n4njs::tVoid:
-					break;
-				case n4njs::tObject:
-					if ( Return.IsEmpty() )
-						qRGnr();
-					CallbackReturn = Get_<rObject_>( Return );
-					break;
-				default:
-					qRVct();
-					break;
+					switch ( ReturnType ) {
+					case n4njs::tVoid:
+						break;
+					case n4njs::tObject:
+						if ( Return.IsEmpty() )
+							qRGnr();
+						CallbackReturn = Get_<rObject_>( Return, true );
+						break;
+					default:
+						qRVct();
+						break;
+					}
 				}
 			qRR
 				if ( CallbackReturn != NULL )
@@ -428,33 +437,36 @@ namespace {
 		int Index,
 		const v8::FunctionCallbackInfo<v8::Value> &Info )
 	{
-		return Get_<rObject_>( Index, Info );
+		return Get_<rObject_>( Index, Info, true );
 	}
 
 	inline n4njs::cUBuffer *GetBuffer_(
 		int Index,
 		const v8::FunctionCallbackInfo<v8::Value> &Info )
 	{
-		return Get_<rBuffer_>( Index, Info );
+		return Get_<rBuffer_>( Index, Info, true );
 	}
 
 	inline n4njs::cURStream *GetStream_(
 		int Index,
 		const v8::FunctionCallbackInfo<v8::Value> &Info )
 	{
-		return Get_<rRStream_>( Index, Info );
+		return Get_<rRStream_>( Index, Info, true );
 	}
 
-	inline n4njs::cUCallback *GetCallback_( const v8::Local<v8::Value> &Value )
+	inline n4njs::cUCallback *GetCallback_(
+		const v8::Local<v8::Value> &Value,
+		bso::sBool UndefinedForbidden )
 	{
-		return Get_<rCallback_>( Value );
+		return Get_<rCallback_>( Value, UndefinedForbidden );
 	}
 
 	inline n4njs::cUCallback *GetCallback_(
 		int Index,
-		const v8::FunctionCallbackInfo<v8::Value> &Info )
+		const v8::FunctionCallbackInfo<v8::Value> &Info,
+		bso::sBool UndefinedForbidden )
 	{
-		return GetCallback_( Info[Index] );
+		return GetCallback_( Info[Index], UndefinedForbidden );
 	}
 
 	inline void Delete_( n4njs::cUCallback *&Callback )
@@ -500,7 +512,7 @@ namespace {
 			Callbacks->Expose().FillWith( NULL );
 
 			while ( Length-- ) {
-				Callbacks->Expose().Store( GetCallback_( Array->Get( Length ) ), Length );
+				Callbacks->Expose().Store( GetCallback_( Array->Get( Length ), true ), Length );
 			}
 		}
 	qRR;
@@ -581,7 +593,7 @@ namespace {
 				( *(n4njs::cURStream **)Value ) = GetStream_( Index, I_() );
 				break;
 			case n4njs::tCallback:
-				( *(n4njs::cUCallback **)Value ) = GetCallback_( Index, I_() );
+				( *(n4njs::cUCallback **)Value ) = GetCallback_( Index, I_(), false );
 				break;
 			case n4njs::tCallbacks:
 				( *( n4njs::cUCallbacks **)Value ) = GetCallbacks_( Index, I_() );
@@ -620,7 +632,7 @@ namespace {
 	};
 }
 
-void wrapper::rLauncher::Launch( const v8::FunctionCallbackInfo<v8::Value>& Info )
+void wrapper::rLauncher::Call( const v8::FunctionCallbackInfo<v8::Value>& Info )
 {
 qRH
 	sCaller_ Caller;
@@ -635,7 +647,7 @@ qRB
 
 	Caller.Init( Info );
 
-	rLauncher_::Launch( Index->Uint32Value(), Caller );
+	rLauncher_::Call( Index->Uint32Value(), Caller );
 
 //	n4allw::GetLauncher().Launch( n4allw::GetFunction( Index->Uint32Value() ), Caller );
 
