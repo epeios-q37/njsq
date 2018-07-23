@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 1999-2017 Claude SIMON (http://q37.info/contact/).
+	Copyright (C) 1999 Claude SIMON (http://q37.info/contact/).
 
 	This file is part of the Epeios framework.
 
@@ -322,11 +322,17 @@ namespace flf {
 /***************/
 
 namespace flf {
-	typedef flf::file_oflow___ rOFlow;
-	typedef flf::file_iflow___ rIFlow;
+	typedef file_oflow___ rOFlow;
+	typedef file_iflow___ rIFlow;
 
-	typedef flf::file_iflow_driver___ rIDriver;
-	typedef flf::file_oflow_driver___ rODriver;
+	typedef file_iflow_driver___ rIDriver;
+	typedef file_oflow_driver___ rODriver;
+
+	typedef rOFlow rWFlow;
+	typedef rIFlow rRFlow;
+
+	typedef rIDriver rRDriver;
+	typedef rODriver rWDriver;
 }
 
 

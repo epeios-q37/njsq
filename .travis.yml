@@ -1,3 +1,5 @@
+# njsq.travis
+
 os:
 - osx
 - linux

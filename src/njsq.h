@@ -20,6 +20,8 @@
 #ifndef NJSQ_INC_
 # define NJSQ_INC_
 
+# include "scli.h"
+
 # define NAME_MC			"NJSq"
 # define NAME_LC			"njsq"
 # define NAME_UC			"NJSQ"
@@ -29,5 +31,7 @@
 # define OWNER_NAME			"Claude SIMON"
 # define OWNER_CONTACT		"http://q37.info/contact/"
 # define COPYRIGHT			COPYRIGHT_YEARS " " OWNER_NAME " (" OWNER_CONTACT ")"	
+
+SCLI_DEC( njsq );
 
 #endif

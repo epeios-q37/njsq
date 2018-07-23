@@ -1,5 +1,7 @@
+# njsq.appveyor
+
 environment:
-  version: 20180127
+  version: 20180723
   affix: njsq
   matrix:
     - nodejs_version: "4"

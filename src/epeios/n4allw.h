@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 1999-2017 Claude SIMON (http://q37.info/contact/).
+	Copyright (C) 1999 Claude SIMON (http://q37.info/contact/).
 
 	This file is part of the Epeios framework.
 
@@ -46,7 +46,7 @@ namespace n4allw {
 			const fnm::rName &ComponentFilename,
 			dlbrry::eNormalization Normalization,
 			n4all::cRegistrar &Registrar,
-			sclmisc::sRack & Rack,
+			sclmisc::sRack &Rack,
 			void * UP,
 			bso::sBool SkipComponentUnloading );
 	public:
@@ -76,10 +76,11 @@ namespace n4allw {
 			bso::sBool SkipComponenentUnloading,	// The component will be unloaded when quitting the program, and not explicitly (at true only for a 'PHP' workaround under 'GNU/Linux').
 			qRPD );
 		inline void Call(
+			n4all::sEnv *Env,
 			sdr::sRow Row,
 			n4all::cCaller &Caller )
 		{
-			return L_().Call( GetFunction_( Row ), Caller );
+			return L_().Call( Env, GetFunction_( Row ), Caller );
 		}
 		bso::sBool GetInfo( str::dString &Info ) const
 		{

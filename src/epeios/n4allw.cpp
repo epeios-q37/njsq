@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 1999-2017 Claude SIMON (http://q37.info/contact/).
+	Copyright (C) 1999 Claude SIMON (http://q37.info/contact/).
 
 	This file is part of the Epeios framework.
 
@@ -48,8 +48,8 @@ namespace {
 		{
 			Functions_ = NULL;
 		}
-		qCVDTOR( rRegistrar_ )
-			void Init( dFunctions_ & Functions )
+		qCVDTOR( rRegistrar_ );
+		void Init( dFunctions_ & Functions )
 		{
 			Functions_ = &Functions;
 		}
@@ -123,6 +123,7 @@ qRH;
 	rRegistrar_ Registrar;
 qRB;
 	Functions_.Init();
+
 	Registrar.Init( Functions_ );
 
 	if ( !Register_( ComponentFilename, Normalization, Registrar, Rack, UP, SkipComponentUnloading ) ) {
